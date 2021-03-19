@@ -40,7 +40,7 @@
         app:prefixTextColor="@color/black">
 
         <EditText
-            android:id="@+id/exisinumber"
+            android:id="@+id/existingNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"

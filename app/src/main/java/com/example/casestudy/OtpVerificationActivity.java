@@ -21,11 +21,14 @@ public class OtpVerificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_otp_verification);
         getSupportActionBar().hide();
 
-        tv=findViewById(R.id.txtVerify);
+        String mobile = getIntent().getStringExtra("mobile");
+
+        tv = findViewById(R.id.txtVerify);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(OtpVerificationActivity.this,FirstUserDetail.class);
+                Intent intent = new Intent(OtpVerificationActivity.this, FirstUserDetail.class);
+                intent.putExtra("mobile", mobile);
                 startActivity(intent);
                 finish();
             }

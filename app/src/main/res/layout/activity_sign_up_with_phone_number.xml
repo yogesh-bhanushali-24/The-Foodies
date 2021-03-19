@@ -46,7 +46,7 @@
         app:prefixTextColor="@color/black">
 
         <EditText
-            android:id="@+id/Username"
+            android:id="@+id/UserNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -61,7 +61,7 @@
 
 
     <com.google.android.gms.common.internal.SignInButtonImpl
-        android:id="@+id/btn1"
+        android:id="@+id/btnContinue"
         style="@style/TextViewTitleMedium16"
         android:layout_width="180sp"
         android:layout_height="60sp"

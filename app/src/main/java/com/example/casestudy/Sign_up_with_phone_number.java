@@ -5,15 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.internal.SignInButtonImpl;
 
 public class Sign_up_with_phone_number extends AppCompatActivity {
 
-    SignInButtonImpl b1;
+    SignInButtonImpl btnContinue;
+    EditText etUserNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +21,15 @@ public class Sign_up_with_phone_number extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_with_phone_number);
         getSupportActionBar().hide();
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        b1=findViewById(R.id.btn1);
-        b1.setOnClickListener(new View.OnClickListener() {
+        etUserNumber = findViewById(R.id.UserNumber);
+        btnContinue = findViewById(R.id.btnContinue);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Sign_up_with_phone_number.this,OtpVerificationActivity.class) );
+                String n = etUserNumber.getText().toString();
+                Intent intentOtpVerificationActivity = new Intent(Sign_up_with_phone_number.this, OtpVerificationActivity.class);
+                intentOtpVerificationActivity.putExtra("mobile", n);
+                startActivity(intentOtpVerificationActivity);
                 Toast.makeText(Sign_up_with_phone_number.this, "button click", Toast.LENGTH_SHORT).show();
             }
         });
