@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextViewTitleRegular12">
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/regular</item>
+    </style>
+    <style name="TextViewTitleMedium16">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/medium</item>
+    </style>
+    <style name="TextViewTitleMedium20">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/medium</item>
+    </style>
+    <style name="TextViewTitleRegular14">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/regular</item>
+    </style>
+    <style name="ImageView56">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:contentDescription">@string/image_description</item>
+    </style>
+    <style name="CommonTIL">
+        <item name="android:textColor">@color/colorAccentDark</item>
+        <item name="android:textColorHint">@color/colorGrey_500</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="boxStrokeColor">@color/lightYellow</item>
+        <item name="boxStrokeErrorColor">@color/colorRed_700</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+
+        <item name="endIconTint">@color/darkYellow</item>
+        <item name="hintTextColor">@color/colorGrey_500</item>
+        <item name="shapeAppearance">?attr/shapeAppearanceMediumComponent</item>
+        <item name="startIconTint">@color/colorGrey_500</item>
+    </style>
+    <style name="TextViewTitleMedium22">
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/medium</item>
+    </style>
+    <style name="ImageView48">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:contentDescription">@string/image_description</item>
+    </style>
+
+    <style name="TextViewTitleRegular16">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/regular</item>
+    </style>
+    <style name="TextViewTitleBold22">
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/bold</item>
+    </style>
+
+</resources>

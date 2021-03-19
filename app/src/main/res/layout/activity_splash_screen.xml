@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFCD6"
+    tools:context=".SplashScreen"
+
+    >
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentTop="true"
+
+        android:layout_centerVertical="true"
+        android:layout_marginTop="0dp"
+        android:background="#FFFCD6"
+        android:src="@drawable/burger_dribble"
+        tools:ignore="MissingClass"></pl.droidsonroids.gif.GifImageView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="145dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="THE FOODIES"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+
+        android:fontFamily="sans-serif-light"
+        android:text="© Copyright All Rights Reserved"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"
+        />
+
+
+</RelativeLayout>

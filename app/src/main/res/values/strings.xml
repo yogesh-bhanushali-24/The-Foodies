@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CaseStudy</string>
+    <string name="don_t_worry_your_phone_number_will_not_be_shared_with_anyone_please_read_our_terms_of_service_and_privacy_policy">Don\'t worry your phone number will not be shared with anyone. Please read our Terms of Service and Privacy Policy</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="image_description">Sayaaraa Digital Power For Workshop/Garage</string>
+    <string name="otp_code">OTP CODE</string>
+    <string name="resend_otp_in">Resend OTP in</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="email_address">Email Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="customer_name">Name</string>
+    <string name="please_enter_valid_details">Please enter valid details</string>
+    <string name="profile">Profile</string>
+
+</resources>
