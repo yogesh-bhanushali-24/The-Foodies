@@ -33,7 +33,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
     String phonenumber;
     String otpid;
     FirebaseAuth mAuth;
-    FirebaseDatabase database;
     ProgressDialog progressDialog;
     String TAG = "OtpVerificationActivity";
 
@@ -46,10 +45,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
 
         otpVerification=findViewById(R.id.txtVerify);
         otpTimer=findViewById(R.id.txtTime);
-        etotp=findViewById(R.id.etOTP);
+        etotp = findViewById(R.id.etOTP);
         phonenumber = getIntent().getStringExtra("mobile");
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(OtpVerificationActivity.this);
         progressDialog.setTitle("Login");
         progressDialog.setMessage("Login to your account");
@@ -57,44 +55,50 @@ public class OtpVerificationActivity extends AppCompatActivity {
         //Non editable otp
         etotp.setEnabled(false);
 
+        //Counter for Resend OTP
+        new CountDownTimer(60000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                otpTimer.setText("" + millisUntilFinished / 1000);
+            }
 
+            @Override
+            public void onFinish() {
+                //initiateOtp("+91"+phonenumber);
+            }
+        }.start();
+
+        //Send OTP
+        initiateOtp("+91" + phonenumber);
+
+        etotp.setEnabled(true);
+
+        //Check User is LoggedIn or Not
+        if (mAuth.getCurrentUser() != null) {
+            intentToFirstUserDetail();
+        }
+
+        //Verification Button Click
         otpVerification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etotp.getText().toString().isEmpty() || etotp.getText().toString().length()!=6){
+                if (etotp.getText().toString().isEmpty() || etotp.getText().toString().length() != 6) {
                     Toast.makeText(OtpVerificationActivity.this, "Wrong OTP", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, etotp.getText().toString());
                     signInWithPhoneAuthCredential(credential);
                 }
             }
         });
-
-        new CountDownTimer(60000,1000){
-            @Override
-            public void onTick(long millisUntilFinished) {
-                    otpTimer.setText(""+millisUntilFinished/1000);
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();
-
-
-        initiateOtp("+91"+phonenumber);
-        etotp.setEnabled(true);
-
-        if (mAuth.getCurrentUser()!=null){
-            Intent intent = new Intent(OtpVerificationActivity.this, FirstUserDetail.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        }
     }
 
-
+    private void intentToFirstUserDetail() {
+        Intent intent = new Intent(OtpVerificationActivity.this, FirstUserDetail.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("mobile", phonenumber);
+        startActivity(intent);
+        finish();
+    }
 
 
     private void initiateOtp(String phoneNumber) {
@@ -136,19 +140,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(OtpVerificationActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
 
-                            //Add value in database
-
-//                            Users user = new Users();
-//                            user.setUserName(binding.etName.getText().toString());
-//                            String id = task.getResult().getUser().getUid();
-//                            database.getReference().child("Users").child(id).setValue(user);
-
-                            startActivity(new Intent(OtpVerificationActivity.this, FirstUserDetail.class));
-                            finish();
+                            intentToFirstUserDetail();
                             progressDialog.dismiss();
 
-                            //FirebaseUser user = task.getResult().getUser();
-                            // ...
                         } else {
 
                             Toast.makeText(OtpVerificationActivity.this, TAG + " : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
