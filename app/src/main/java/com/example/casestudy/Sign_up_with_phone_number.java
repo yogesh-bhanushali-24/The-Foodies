@@ -26,11 +26,23 @@ public class Sign_up_with_phone_number extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String n = etUserNumber.getText().toString();
-                Intent intentOtpVerificationActivity = new Intent(Sign_up_with_phone_number.this, OtpVerificationActivity.class);
-                intentOtpVerificationActivity.putExtra("mobile", n);
-                startActivity(intentOtpVerificationActivity);
-                Toast.makeText(Sign_up_with_phone_number.this, "button click", Toast.LENGTH_SHORT).show();
+
+                String MobilePattern = "[0-9]{10}";
+
+
+                if (etUserNumber.getText().toString().isEmpty()) {
+                    Toast.makeText(Sign_up_with_phone_number.this, "Empty", Toast.LENGTH_SHORT).show();
+                } else if (etUserNumber.getText().toString().matches(MobilePattern)) {
+                    String n = etUserNumber.getText().toString();
+                    Intent intentOtpVerificationActivity = new Intent(Sign_up_with_phone_number.this, OtpVerificationActivity.class);
+                    intentOtpVerificationActivity.putExtra("mobile", n);
+                    startActivity(intentOtpVerificationActivity);
+                    finish();
+                } else if (!etUserNumber.getText().toString().matches(MobilePattern)) {
+                    etUserNumber.setError("Invalid number");
+                    Toast.makeText(Sign_up_with_phone_number.this, "Invalid Number", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
