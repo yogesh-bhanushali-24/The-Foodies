@@ -6,24 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.casestudy.model.UserModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class FirstUserDetail extends AppCompatActivity {
 
     EditText etName, etNumber, etEmail;
     MaterialButton SubDetail;
     FirebaseDatabase userDb = FirebaseDatabase.getInstance();
-    DatabaseReference databaseReference = userDb.getReference().child("UserDetail");
-
+    DatabaseReference databaseReference = userDb.getReference();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,9 @@ public class FirstUserDetail extends AppCompatActivity {
                         userMap.put("Name", uName);
                         userMap.put("Mobile", uNumber);
                         userMap.put("Email", uEmail);
-                        databaseReference.push().setValue(userMap);
+//                        databaseReference.push().setValue(userMap);
+                        UserModel userModel = new UserModel(uName, uNumber, uEmail);
+                        databaseReference.child("UserDetail").child(auth.getUid()).setValue(userModel);
 
                         Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
                         startActivity(intent);
