@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".homeFragment">
+    tools:context=".homeFragment"
+    android:id="@+id/homeFragmentLayout"
+
+    >
 
 
     <LinearLayout
@@ -231,6 +234,25 @@
             </LinearLayout>
 
         </HorizontalScrollView>
+
+    </LinearLayout>
+    <!--    <View-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:backgroundTint="#808080"-->
+    <!--        android:background="@color/black"-->
+    <!--        />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allFoodRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" />
     </LinearLayout>
 
 

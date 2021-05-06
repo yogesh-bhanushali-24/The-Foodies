@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileFragment">
+    tools:context=".UserProfileFragment"
+    android:id="@+id/UserProfileLayout">
 
 
     <TextView
@@ -15,24 +16,25 @@
         android:layout_centerHorizontal="true"
 
         android:layout_marginTop="171dp"
-        android:text="TextView" />
+        android:text="Current User Name"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tvUserNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_centerInParent="true"
+        android:text="Current User Number"
+        android:layout_below="@+id/tvUserName"
         android:layout_centerHorizontal="true"
-
-        />
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_alignParentBottom="true"
+        android:text="Current User Email"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="150dp" />
+        android:layout_below="@+id/tvUserNumber"
+
+        android:textColor="@color/black" />
 </RelativeLayout>
