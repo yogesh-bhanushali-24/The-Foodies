@@ -54,6 +54,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
 
             }
         });
@@ -66,6 +67,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
@@ -77,6 +79,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
@@ -88,6 +91,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
         lItalian.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +102,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
@@ -109,6 +114,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
@@ -120,6 +126,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
@@ -131,6 +138,7 @@ public class homeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
+                //getActivity().finish();
             }
         });
 
