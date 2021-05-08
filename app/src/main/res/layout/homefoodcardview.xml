@@ -123,34 +123,33 @@
             android:layout_below="@id/lblfooddescription"
             android:layout_marginLeft="10dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/foodEditBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_toRightOf="@id/foodimage"
-            android:layout_below="@id/fooddescription"
-            android:text="Edit"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_medium"
-            android:drawableTint="@color/white"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="#008000" />
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/foodEditBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_toRightOf="@id/foodimage"-->
+        <!--            android:layout_below="@id/fooddescription"-->
+        <!--            android:text="Edit"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:fontFamily="@font/poppins_medium"-->
+        <!--            android:drawableTint="@color/white"-->
+        <!--            android:layout_marginLeft="10dp"-->
+        <!--            android:backgroundTint="#008000" />-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/foodDeleteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_toRightOf="@id/foodEditBtn"
-            android:layout_below="@id/fooddescription"
-            android:layout_marginLeft="18dp"
-            android:text="Delete"
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/foodDeleteBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_toRightOf="@id/foodEditBtn"-->
+        <!--            android:layout_below="@id/fooddescription"-->
+        <!--            android:layout_marginLeft="18dp"-->
+        <!--            android:text="Delete"-->
 
-            android:drawableTint="@color/white"
-            android:backgroundTint="#c70000"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_medium"
-
-            />
+        <!--            android:drawableTint="@color/white"-->
+        <!--            android:backgroundTint="#c70000"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:fontFamily="@font/poppins_medium"-->
+        <!--            />-->
 
 
     </RelativeLayout>
