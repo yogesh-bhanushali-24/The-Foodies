@@ -22,8 +22,8 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
     @Override
     protected void onBindViewHolder(@NonNull foodviewholder holder, int position, @NonNull FoodModel model) {
         holder.mainFoodName.setText(model.getName());
-        holder.mainFoodPrice.setText(model.getPrice());
-        holder.mainFoodCategory.setText(model.getCategories());
+        holder.mainFoodPrice.setText(model.getPrice() + "₹");
+        holder.mainFoodCategory.setText(model.getCategories().toUpperCase());
         holder.mainFoodDescription.setText(model.getDescription());
         Glide.with(holder.mainFoodImage.getContext()).load(model.getImage()).into(holder.mainFoodImage);
     }
