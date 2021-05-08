@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.casestudy.model.FoodModel;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Time;
 import java.util.Locale;
@@ -23,6 +28,8 @@ public class homeFragment extends Fragment {
 
     private LinearLayout lBreakfast, lPunjabi, lGujarati, lSouthIndian, lItalian, lChinese, lColdDrinks, lHotDrinks;
     LinearLayout linearLayout;
+    RecyclerView foodDisplayRecyclerview;
+    fooddisplayadapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +50,21 @@ public class homeFragment extends Fragment {
         lChinese = view.findViewById(R.id.chinese);
         lColdDrinks = view.findViewById(R.id.colddrinks);
         lHotDrinks = view.findViewById(R.id.hotdrinks);
+
+        //recycler view
+        foodDisplayRecyclerview = view.findViewById(R.id.allFoodRecyclerView);
+        foodDisplayRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FirebaseRecyclerOptions<FoodModel> options =
+                new FirebaseRecyclerOptions.Builder<FoodModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Food"), FoodModel.class)
+                        .build();
+
+        adapter = new fooddisplayadapter(options);
+        foodDisplayRecyclerview.setAdapter(adapter);
+
+
+        //end
 
 
         lBreakfast.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +181,18 @@ public class homeFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
 
