@@ -1,6 +1,12 @@
 package com.example.casestudy;
 
+import android.app.Activity;
+import android.app.Application;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +58,7 @@ public class homeFragment extends Fragment {
         //Layout
         linearLayout = view.findViewById(R.id.homeFragmentLayout);
 
-
+        //horizontal food category initialize
         lBreakfast = view.findViewById(R.id.breakfast);
         lPunjabi = view.findViewById(R.id.punjabi);
         lGujarati = view.findViewById(R.id.gujarati);
@@ -59,6 +67,7 @@ public class homeFragment extends Fragment {
         lChinese = view.findViewById(R.id.chinese);
         lColdDrinks = view.findViewById(R.id.colddrinks);
         lHotDrinks = view.findViewById(R.id.hotdrinks);
+        //horizontal food category initialize end
 
         //marquee text box
         txtMarquee = view.findViewById(R.id.MarqueeText);
@@ -209,6 +218,33 @@ public class homeFragment extends Fragment {
         }).setDuration(3000);
         snackBar.show();
         //end Snackbar
+
+
+        //this code for no internet connection
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
+            Dialog dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.no_internet_dialog);
+            dialog.setCancelable(false);
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().getAttributes().windowAnimations =
+                    android.R.style.Animation_Dialog;
+            Button DialogNoInternetBtn = dialog.findViewById(R.id.noInternetBtn);
+            DialogNoInternetBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setRetainInstance(true);
+                    Toast.makeText(getContext(), "Restart Your Application", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            dialog.show();
+
+        }
+
+        //end this code for no internet connection
 
 
         return view;
