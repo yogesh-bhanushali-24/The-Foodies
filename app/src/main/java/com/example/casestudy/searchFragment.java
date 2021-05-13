@@ -14,6 +14,10 @@ import com.example.casestudy.model.FoodModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+
 
 public class searchFragment extends Fragment {
 
@@ -38,8 +42,9 @@ public class searchFragment extends Fragment {
         adapter = new fooddisplayadapter(options);
         foodSearchRecycler.setAdapter(adapter);
 
-
         //end
+
+
         return view;
     }
 

@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
                         replace(new cartFragment());
                         break;
 
-//                    case R.id.myOrder:
-//
-//                        break;
+                    case R.id.myOrder:
+                        replace(new myorderFragment());
+                        break;
                     case R.id.search:
                         replace(new searchFragment());
                         break;
-//
+
                     case R.id.user_profile:
                         replace(new UserProfileFragment());
                         break;

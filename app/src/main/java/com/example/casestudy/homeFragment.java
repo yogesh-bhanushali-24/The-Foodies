@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casestudy.model.FoodModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.Locale;
@@ -30,6 +36,10 @@ public class homeFragment extends Fragment {
     LinearLayout linearLayout;
     RecyclerView foodDisplayRecyclerview;
     fooddisplayadapter adapter;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    TextView txtMarquee;
+    String s1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +50,6 @@ public class homeFragment extends Fragment {
         //Layout
         linearLayout = view.findViewById(R.id.homeFragmentLayout);
 
-        //onclick event on Horizontal food categories
 
         lBreakfast = view.findViewById(R.id.breakfast);
         lPunjabi = view.findViewById(R.id.punjabi);
@@ -50,6 +59,30 @@ public class homeFragment extends Fragment {
         lChinese = view.findViewById(R.id.chinese);
         lColdDrinks = view.findViewById(R.id.colddrinks);
         lHotDrinks = view.findViewById(R.id.hotdrinks);
+
+        //marquee text box
+        txtMarquee = view.findViewById(R.id.MarqueeText);
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference().child("Notice");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    txtMarquee.setVisibility(View.GONE);
+                } else {
+                    s1 = snapshot.getValue().toString();
+                    txtMarquee.setText(s1);
+                    txtMarquee.setSelected(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+
+        //
 
         //recycler view
         foodDisplayRecyclerview = view.findViewById(R.id.allFoodRecyclerView);
@@ -62,11 +95,9 @@ public class homeFragment extends Fragment {
 
         adapter = new fooddisplayadapter(options);
         foodDisplayRecyclerview.setAdapter(adapter);
-
-
         //end
 
-
+        //onclick event on Horizontal food categories
         lBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +208,7 @@ public class homeFragment extends Fragment {
             }
         }).setDuration(3000);
         snackBar.show();
+        //end Snackbar
 
 
         return view;
