@@ -183,8 +183,8 @@ public class homeFragment extends Fragment {
         lColdDrinks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "CoolDrink is ready", Toast.LENGTH_SHORT).show();
-                String CategoryName = "cooldrink";
+                Toast.makeText(view.getContext(), "ColdDrink is ready", Toast.LENGTH_SHORT).show();
+                String CategoryName = "colddrink";
                 Intent intent = new Intent(getContext(), CategoriesViewActivity.class);
                 intent.putExtra("Category", CategoryName);
                 startActivity(intent);
@@ -206,7 +206,6 @@ public class homeFragment extends Fragment {
 
 
         //Snackbar
-
         Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                 "Order Via Call Click here ", Snackbar.LENGTH_LONG).setAction("Click To Call", new View.OnClickListener() {
             @Override
