@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class homeFragment extends Fragment {
     DatabaseReference reference;
     TextView txtMarquee;
     String s1;
+    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +70,11 @@ public class homeFragment extends Fragment {
         lColdDrinks = view.findViewById(R.id.colddrinks);
         lHotDrinks = view.findViewById(R.id.hotdrinks);
         //horizontal food category initialize end
+
+        //swipe refresh initialize
+        swipeRefresh = view.findViewById(R.id.swipeRefreshLayout);
+        //end swipe refresh initialize
+
 
         //marquee text box
         txtMarquee = view.findViewById(R.id.MarqueeText);
@@ -244,6 +251,26 @@ public class homeFragment extends Fragment {
         }
 
         //end this code for no internet connection
+
+
+        //swipe refresh layout main code
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                FirebaseRecyclerOptions<FoodModel> options =
+                        new FirebaseRecyclerOptions.Builder<FoodModel>()
+                                .setQuery(FirebaseDatabase.getInstance().getReference().child("Food"), FoodModel.class)
+                                .build();
+
+                adapter = new fooddisplayadapter(options);
+                foodDisplayRecyclerview.setAdapter(adapter);
+                adapter.startListening();
+                swipeRefresh.setRefreshing(false);
+                adapter.startListening();
+            }
+
+        });
+        //end swipe refresh layout main code
 
 
         return view;

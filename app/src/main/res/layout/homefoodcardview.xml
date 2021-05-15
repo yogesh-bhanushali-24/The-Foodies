@@ -3,22 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="15dp"
     android:elevation="5dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/foodimage"
-            android:layout_width="150dp"
+            android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_launcher"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
 
 
         <TextView
@@ -105,8 +105,6 @@
             android:layout_toRightOf="@id/foodimage"
             android:layout_below="@id/foodprice"
             android:layout_marginLeft="10dp"
-
-
             />
 
 
@@ -118,38 +116,56 @@
             android:textSize="15sp"
             android:textColor="#000"
             android:fontFamily="@font/andada"
-
             android:layout_toRightOf="@id/foodimage"
             android:layout_below="@id/lblfooddescription"
             android:layout_marginLeft="10dp" />
 
-        <!--        <com.google.android.material.button.MaterialButton-->
-        <!--            android:id="@+id/foodEditBtn"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="40dp"-->
-        <!--            android:layout_toRightOf="@id/foodimage"-->
-        <!--            android:layout_below="@id/fooddescription"-->
-        <!--            android:text="Edit"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:fontFamily="@font/poppins_medium"-->
-        <!--            android:drawableTint="@color/white"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:backgroundTint="#008000" />-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/decrementItem"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/fooddescription"
+            android:layout_toRightOf="@id/foodimage"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center" />
 
-        <!--        <com.google.android.material.button.MaterialButton-->
-        <!--            android:id="@+id/foodDeleteBtn"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="40dp"-->
-        <!--            android:layout_toRightOf="@id/foodEditBtn"-->
-        <!--            android:layout_below="@id/fooddescription"-->
-        <!--            android:layout_marginLeft="18dp"-->
-        <!--            android:text="Delete"-->
+        <TextView
+            android:id="@+id/itemNumber"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@id/fooddescription"
+            android:layout_toRightOf="@id/decrementItem"
+            android:text="0"
+            android:layout_marginTop="12dp"
+            android:textAlignment="center" />
 
-        <!--            android:drawableTint="@color/white"-->
-        <!--            android:backgroundTint="#c70000"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:fontFamily="@font/poppins_medium"-->
-        <!--            />-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/incrementItem"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/fooddescription"
+            android:layout_toRightOf="@id/itemNumber"
+            android:textAlignment="center"
+            android:onClick="increment" />
+
+        <ImageView
+            android:id="@+id/foodCart"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/fooddescription"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/incrementItem"
+            android:src="@drawable/cart"
+            app:tint="#FFA500" />
 
 
     </RelativeLayout>
