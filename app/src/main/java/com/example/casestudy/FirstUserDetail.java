@@ -29,7 +29,8 @@ public class FirstUserDetail extends AppCompatActivity {
     FirebaseDatabase userDb = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = userDb.getReference();
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    DatabaseReference checkUser = userDb.getReference().child("UserDetail");
+    FirebaseAuth authNumber;
+    //DatabaseReference checkUser = userDb.getReference().child("UserDetail");
 
 
     @Override
@@ -37,8 +38,6 @@ public class FirstUserDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_user_detail);
         getSupportActionBar().hide();
-
-        auth.addAuthStateListener(authStateListener);
 
 
 //      the Existing user value Focus false
@@ -51,6 +50,11 @@ public class FirstUserDetail extends AppCompatActivity {
 
         String mobile = getIntent().getStringExtra("mobile");
         etNumber.setText(mobile);
+
+        //this code for session
+        // auth.addAuthStateListener(authStateListener);
+        //end session
+
 
         SubDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +74,9 @@ public class FirstUserDetail extends AppCompatActivity {
                 } else if (!etName.getText().toString().isEmpty() && !etEmail.getText().toString().isEmpty()) {
                     if (etName.getText().toString().trim().matches(NamePattern) &&
                             Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
-                        String uName = etName.getText().toString();
+                        String uName = etName.getText().toString().trim();
                         String uNumber = etNumber.getText().toString();
-                        String uEmail = etEmail.getText().toString();
+                        String uEmail = etEmail.getText().toString().trim();
                         HashMap<String, String> userMap = new HashMap<>();
                         userMap.put("Name", uName);
                         userMap.put("Mobile", uNumber);
@@ -96,29 +100,29 @@ public class FirstUserDetail extends AppCompatActivity {
     }
 
 
-    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
-
-            String checkNumber = auth.getCurrentUser().getPhoneNumber();
-            checkUser.orderByChild("mobile").equalTo(checkNumber).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    String existName=snapshot.child("name").getValue().toString();
-//                    String existEmail=snapshot.child("email").getValue().toString();
-//                    etName.setText(existName);
-//                    etEmail.setText(existEmail);
-                    Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(FirstUserDetail.this, "Register your self", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    };
+//    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+//        @Override
+//        public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
+//            String checkNumber =etNumber.getText().toString();
+//            //String checkNumber = authNumber.getCurrentUser().getPhoneNumber();
+//            checkUser.orderByChild("mobile").equalTo(checkNumber).addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+////                    String existName=snapshot.child("name").getValue().toString();
+////                    String existEmail=snapshot.child("email").getValue().toString();
+////                    etName.setText(existName);
+////                    etEmail.setText(existEmail);
+//                    Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
+//                    startActivity(intent);
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                    Toast.makeText(FirstUserDetail.this, "Register your self", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    };
 
 
 }

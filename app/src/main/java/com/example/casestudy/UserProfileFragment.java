@@ -104,12 +104,12 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String updatedEmail = UserEmailTv.getText().toString();
-                String updatedName = UserNameTv.getText().toString();
+                String updatedEmail = UserEmailTv.getText().toString().trim();
+                String updatedName = UserNameTv.getText().toString().trim();
                 String updatedNumber = UserNumberTv.getText().toString();
 
 
-                if (!updatedEmail.isEmpty() || !updatedName.isEmpty() || !updatedNumber.isEmpty()) {
+                if (!updatedEmail.isEmpty() && !updatedName.isEmpty() && !updatedNumber.isEmpty()) {
                     databaseReference.child("email").setValue(updatedEmail);
                     databaseReference.child("name").setValue(updatedName);
                     databaseReference.child("mobile").setValue(updatedNumber);

@@ -58,7 +58,7 @@
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="5dp"
-
+            android:enabled="false"
             android:hint="Number"
             android:inputType="number"
             android:maxLength="30">
