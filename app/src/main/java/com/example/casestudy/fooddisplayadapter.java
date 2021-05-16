@@ -1,5 +1,6 @@
 package com.example.casestudy;
 
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.example.casestudy.model.FoodModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, fooddisplayadapter.foodviewholder> {
     public fooddisplayadapter(@NonNull FirebaseRecyclerOptions<FoodModel> options) {
@@ -28,6 +31,23 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
         holder.mainFoodCategory.setText(model.getCategories().toUpperCase());
         holder.mainFoodDescription.setText(model.getDescription());
         Glide.with(holder.mainFoodImage.getContext()).load(model.getImage()).into(holder.mainFoodImage);
+
+
+        //image show dialog box
+        holder.mainFoodImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogPlus dialogPlus = DialogPlus.newDialog(holder.mainFoodImage.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.image_dialog))
+                        .create();
+
+                View view = dialogPlus.getHolderView();
+                ImageView imgeDialog = view.findViewById(R.id.imageShow);
+                Glide.with(imgeDialog.getContext()).load(model.getImage()).into(imgeDialog);
+                dialogPlus.show();
+            }
+        });
+        //end image show dialog box
 
 
         //increment decrement
