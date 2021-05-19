@@ -1,6 +1,7 @@
 package com.example.casestudy;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,13 @@ import com.example.casestudy.model.FoodModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.util.HashMap;
 
 public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, fooddisplayadapter.foodviewholder> {
     public fooddisplayadapter(@NonNull FirebaseRecyclerOptions<FoodModel> options) {
@@ -55,6 +61,11 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
             @Override
             public void onClick(View v) {
                 holder.count++;
+                if (holder.count >= 10) {
+                    Toast.makeText(holder.mainIncrement.getContext(), "You Can't insert more than 10", Toast.LENGTH_SHORT).show();
+                    holder.count = 10;
+                }
+
                 holder.mainFoodItemNumber.setText("" + holder.count);
             }
         });
@@ -70,7 +81,7 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
             }
         });
 
-        //end
+        //end increment decrement
 
 
         //click on cart
@@ -78,9 +89,39 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
             @Override
             public void onClick(View v) {
                 Toast.makeText(holder.mainFoodCart.getContext(), "Food got to cart", Toast.LENGTH_SHORT).show();
+
+                if (holder.count == 0) {
+                    Toast.makeText(holder.mainFoodCart.getContext(), "Insert Quantity", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    //Insert Food in current user cart view
+                    String cartName = model.getName();
+                    String cartPrice = model.getPrice();
+                    String cartCategory = model.getCategories();
+                    String cartDescription = model.getDescription();
+                    String cartQuantity = String.valueOf(holder.count);
+                    String cartImage = model.getImage();
+
+                    int cartFoodPrice = Integer.parseInt(model.getPrice());
+                    int FoodQuantityPrise = cartFoodPrice * holder.count;
+                    String cartTotal = String.valueOf(FoodQuantityPrise);
+
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("name", cartName);
+                    hashMap.put("price", cartPrice);
+                    hashMap.put("category", cartCategory);
+                    hashMap.put("description", cartDescription);
+                    hashMap.put("quantity", cartQuantity);
+                    hashMap.put("image", cartImage);
+                    hashMap.put("total", cartTotal);
+                    holder.referenceCart.child(holder.auth.getCurrentUser().getUid()).push().setValue(hashMap);
+
+                    //end Insert Food in current user cart view
+                }
+
             }
         });
-        //
+        //end click on cart
     }
 
     @NonNull
@@ -96,6 +137,9 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
         TextView mainFoodItemNumber;
         MaterialButton mainIncrement, mainDecrement;
         int count = 0;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference referenceCart = database.getReference().child("cart");
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
         public foodviewholder(@NonNull final View itemView) {
@@ -109,30 +153,6 @@ public class fooddisplayadapter extends FirebaseRecyclerAdapter<FoodModel, foodd
             mainIncrement = itemView.findViewById(R.id.incrementItem);
             mainDecrement = itemView.findViewById(R.id.decrementItem);
             mainFoodItemNumber = itemView.findViewById(R.id.itemNumber);
-
-            //increment decrement
-//            mainIncrement.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(final View v) {
-//                    count++;
-//                    mainFoodItemNumber.setText(""+count);
-//                }
-//            });
-//
-//            mainDecrement.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(final View v) {
-//                    if (count<=0)
-//                    {
-//                        count=0;
-//                    }
-//                    else count--;
-//                    mainFoodItemNumber.setText(""+count);
-//
-//                }
-//            });
-
-            //end
 
 
         }

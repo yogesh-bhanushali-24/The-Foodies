@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:elevation="40dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/cartfoodimage"
+            android:layout_width="100dp"
+            android:layout_height="180dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblfoodname"
+            android:text="Name:"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartfoodname"
+            android:text="Food Name"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/lblfoodname"
+            android:layout_marginLeft="1dp"
+            android:fontFamily="@font/poppins_medium" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblfoodcategory"
+            android:text="Category:"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_below="@id/cartfoodname"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartfoodcategory"
+            android:text="Food Category "
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/lblfoodcategory"
+            android:layout_below="@id/cartfoodname"
+            android:layout_marginLeft="1dp"
+            android:fontFamily="@font/poppins_medium" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblfoodprice"
+            android:text="Price:"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_below="@id/cartfoodcategory"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartfoodprice"
+            android:text="This is Food Price"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/lblfoodprice"
+            android:layout_below="@id/cartfoodcategory"
+            android:layout_marginLeft="1dp"
+            android:fontFamily="@font/poppins_medium" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblfooddescription"
+            android:text="Description:"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_below="@id/cartfoodprice"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartfooddescription"
+            android:text="Food Description detail show here"
+            android:textSize="10sp"
+            android:textColor="#000"
+            android:fontFamily="@font/andada"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_below="@id/lblfooddescription"
+            android:layout_marginLeft="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cartdecrementItem"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="-"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/cartfooddescription"
+            android:layout_toRightOf="@id/cartfoodimage"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/cartitemNumber"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@id/cartfooddescription"
+            android:layout_toRightOf="@id/cartdecrementItem"
+            android:text="0"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cartincrementItem"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="+"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/cartfooddescription"
+            android:layout_toRightOf="@id/cartitemNumber"
+            android:textAlignment="center"
+            android:onClick="increment" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/cartupdatefoodCart"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_below="@+id/cartfooddescription"-->
+        <!--            android:layout_marginTop="4dp"-->
+        <!--            android:layout_toRightOf="@+id/cartincrementItem"-->
+        <!--            android:src="@drawable/cart"-->
+        <!--            app:tint="#FFA500" />-->
+
+        <TextView
+            android:id="@+id/lbltotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cartfooddescription"
+            android:layout_toRightOf="@id/cartincrementItem"
+            android:text="Total:"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/cartfoodtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lbltotal"
+            android:layout_below="@+id/cartfooddescription"
+            android:text="Q*₹"
+            android:layout_marginLeft="1dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <ImageView
+            android:id="@+id/cartfooddelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

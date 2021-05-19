@@ -3,6 +3,7 @@ package com.example.casestudy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -29,8 +30,8 @@ public class FirstUserDetail extends AppCompatActivity {
     FirebaseDatabase userDb = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = userDb.getReference();
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseAuth authNumber;
-    //DatabaseReference checkUser = userDb.getReference().child("UserDetail");
+    DatabaseReference referenceCheckUser = userDb.getReference().child("UserDetail");
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -39,20 +40,46 @@ public class FirstUserDetail extends AppCompatActivity {
         setContentView(R.layout.activity_first_user_detail);
         getSupportActionBar().hide();
 
+        progressDialog = new ProgressDialog(FirstUserDetail.this);
+        progressDialog.setTitle("Fetching Detail");
+        progressDialog.setMessage("Redirect to Welcome page");
 
 //      the Existing user value Focus false
-
         etName = findViewById(R.id.Username);
         etNumber = findViewById(R.id.existingNumber);
         etEmail = findViewById(R.id.UserEmail);
         SubDetail = findViewById(R.id.btnGoOn);
-//        e1.setText("9726036668");
 
         String mobile = getIntent().getStringExtra("mobile");
         etNumber.setText(mobile);
 
-        //this code for session
-        // auth.addAuthStateListener(authStateListener);
+        //this code for session and this code is used when user is already create account on this app
+
+
+        referenceCheckUser.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String alreadyExistNumber = etNumber.getText().toString();
+                String Email = snapshot.child("email").getValue().toString();
+                String Name = snapshot.child("name").getValue().toString();
+
+                if (alreadyExistNumber.equals(etNumber.getText().toString())) {
+                    progressDialog.show();
+                    etName.setText(Name);
+                    etEmail.setText(Email);
+                }
+                Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
+                startActivity(intent);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         //end session
 
 
@@ -98,31 +125,6 @@ public class FirstUserDetail extends AppCompatActivity {
         });
 
     }
-
-
-//    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-//        @Override
-//        public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
-//            String checkNumber =etNumber.getText().toString();
-//            //String checkNumber = authNumber.getCurrentUser().getPhoneNumber();
-//            checkUser.orderByChild("mobile").equalTo(checkNumber).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                    String existName=snapshot.child("name").getValue().toString();
-////                    String existEmail=snapshot.child("email").getValue().toString();
-////                    etName.setText(existName);
-////                    etEmail.setText(existEmail);
-//                    Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
-//                    startActivity(intent);
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(FirstUserDetail.this, "Register your self", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    };
 
 
 }

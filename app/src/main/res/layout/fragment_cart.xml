@@ -6,12 +6,11 @@
     tools:context=".cartFragment"
     android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="24sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cart fragment" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/cartRecycler"
+       android:layout_width="match_parent"
+       android:layout_height="500dp"
+       android:layout_gravity="top" />
 
 
 </LinearLayout>
