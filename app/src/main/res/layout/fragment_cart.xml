@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".cartFragment"
-    android:gravity="center">
+    android:orientation="vertical">
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/cartRecycler"
@@ -13,4 +14,60 @@
        android:layout_gravity="top" />
 
 
-</LinearLayout>
+   <TextView
+       android:id="@+id/GrandTotal"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="1045₹"
+       android:textSize="25dp"
+       android:fontFamily="@font/poppins_medium"
+       android:layout_marginRight="20dp"
+       android:layout_above="@+id/placeOrder"
+       android:layout_alignParentRight="true" />
+
+   <TextView
+       android:id="@+id/lblGrandTotal"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Grand Total"
+       android:layout_alignParentLeft="true"
+       android:layout_marginLeft="16dp"
+       android:layout_above="@+id/placeOrder"
+       android:textSize="25dp"
+       android:fontFamily="@font/poppins_medium" />
+
+   <EditText
+       android:id="@+id/UserAddress"
+       android:layout_width="280dp"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/lblGrandTotal"
+       android:layout_marginLeft="16dp"
+       android:hint="ADDRESS"
+       android:fontFamily="@font/poppins_medium" />
+
+   <com.google.android.material.button.MaterialButton
+       android:layout_width="80dp"
+       android:layout_height="wrap_content"
+       android:layout_toRightOf="@+id/UserAddress"
+       android:text="add"
+       android:textColor="@color/black"
+       android:backgroundTint="@color/lightYellow"
+       android:layout_marginRight="16dp"
+       android:layout_above="@+id/GrandTotal"
+       android:fontFamily="@font/poppins_medium"
+       android:layout_marginBottom="1dp" />
+
+
+   <com.google.android.material.button.MaterialButton
+       android:id="@+id/placeOrder"
+       android:layout_width="380dp"
+       android:layout_height="50dp"
+       android:layout_centerHorizontal="true"
+       android:layout_alignParentBottom="true"
+       android:layout_marginTop="1dp"
+       android:fontFamily="@font/poppins_medium"
+       android:text="Place Order"
+       android:textColor="@color/black"
+       android:textSize="20dp" />
+
+</RelativeLayout>
