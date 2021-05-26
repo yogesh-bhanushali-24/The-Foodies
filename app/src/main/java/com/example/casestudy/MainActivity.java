@@ -9,9 +9,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,6 +126,34 @@ public class MainActivity extends AppCompatActivity {
 //        email = hView.findViewById(R.id.email);
 //        name.setText("Yogesh Bhanushali");
 //        email.setText("bhanushali@gmail.com");
+
+
+        //this code for no internet connection
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.no_internet_dialog);
+            dialog.setCancelable(false);
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().getAttributes().windowAnimations =
+                    android.R.style.Animation_Dialog;
+            Button DialogNoInternetBtn = dialog.findViewById(R.id.noInternetBtn);
+            DialogNoInternetBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recreate();
+                    Toast.makeText(MainActivity.this, "Restart Your Application", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            dialog.show();
+
+        }
+
+        //end this code for no internet connection
+
 
     }
     //end Navigation drawer

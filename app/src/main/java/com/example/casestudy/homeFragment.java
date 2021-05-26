@@ -226,31 +226,7 @@ public class homeFragment extends Fragment {
         //end Snackbar
 
 
-        //this code for no internet connection
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {
-            Dialog dialog = new Dialog(getContext());
-            dialog.setContentView(R.layout.no_internet_dialog);
-            dialog.setCancelable(false);
-            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            dialog.getWindow().getAttributes().windowAnimations =
-                    android.R.style.Animation_Dialog;
-            Button DialogNoInternetBtn = dialog.findViewById(R.id.noInternetBtn);
-            DialogNoInternetBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setRetainInstance(true);
-                    Toast.makeText(getContext(), "Restart Your Application", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            dialog.show();
-
-        }
-
-        //end this code for no internet connection
 
 
         //swipe refresh layout main code
