@@ -3,6 +3,7 @@ package com.example.casestudy;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +23,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartdisplayadapter.cartViewHolder> {
-    public cartdisplayadapter(@NonNull FirebaseRecyclerOptions<CartModel> options) {
+
+    private totalCalling TCalling;
+
+    public cartdisplayadapter(@NonNull FirebaseRecyclerOptions<CartModel> options, totalCalling calling) {
         super(options);
+        //this variable store totalCalling interface
+        TCalling = calling;
+        //end this variable store totalCalling interface
     }
+
 
     @Override
     protected void onBindViewHolder(@NonNull final cartViewHolder holder, final int position, @NonNull final CartModel model) {
@@ -61,6 +69,10 @@ public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartd
                 FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(getRef(position).getKey()).updateChildren(map);
 
+                //calling bill() from cartFragment
+                TCalling.bill();
+                //end calling bill() from cartFragment
+
             }
         });
 
@@ -84,11 +96,12 @@ public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartd
                 FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(getRef(position).getKey()).updateChildren(map);
 
+                //calling bill() from cartFragment
+                TCalling.bill();
+                //end calling bill() from cartFragment
 
             }
         });
-
-
         //end increment and decrement in cart
 
 
@@ -108,7 +121,9 @@ public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartd
                     e.printStackTrace();
                 }
 
-
+                //calling bill() from cartFragment
+                TCalling.bill();
+                //end calling bill() from cartFragment
             }
         });
         //end delete cart food item
@@ -129,11 +144,8 @@ public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartd
         ImageView mainCartFoodImage;
         ImageView mainCartFoodDelete;
         MaterialButton mainCartIncrement, mainCartDecrement;
-
-        // int count;
         public cartViewHolder(@NonNull View itemView) {
             super(itemView);
-
             mainCartFoodName = itemView.findViewById(R.id.cartfoodname);
             mainCartFoodPrice = itemView.findViewById(R.id.cartfoodprice);
             mainCartFoodCategory = itemView.findViewById(R.id.cartfoodcategory);
@@ -145,6 +157,12 @@ public class cartdisplayadapter extends FirebaseRecyclerAdapter<CartModel, cartd
             mainCartIncrement = itemView.findViewById(R.id.cartincrementItem);
             mainCartDecrement = itemView.findViewById(R.id.cartdecrementItem);
         }
+    }
+
+    public interface totalCalling {
+        //this function belonging to cartFragment bill()
+        void bill();
+        //end this function belonging to cartFragment bill()
     }
 
 }

@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class cartFragment extends Fragment {
+public class cartFragment extends Fragment implements com.example.casestudy.cartdisplayadapter.totalCalling {
     private RecyclerView cartDisplayRecycler;
     cartdisplayadapter cartdisplayadapter;
     private TextView GrandTotalTv;
@@ -51,39 +51,12 @@ public class cartFragment extends Fragment {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid()), CartModel.class)
                         .build();
 
-        cartdisplayadapter = new cartdisplayadapter(options);
+        cartdisplayadapter = new cartdisplayadapter(options, () -> bill());
         cartDisplayRecycler.setAdapter(cartdisplayadapter);
         //end show cart view data
 
 
-        //total bill
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            int countTotal = 0;
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot ds : snapshot.getChildren()) {
-
-                    String total = ds.child("total").getValue().toString();
-                    int total1 = Integer.parseInt(total);
-                    countTotal = countTotal + total1;
-                }
-                GrandTotalTv.setText(String.valueOf(countTotal) + "₹");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-
-        reference.addListenerForSingleValueEvent(valueEventListener);
-
-        //end total bill
-
+        bill();
 
         return view;
     }
@@ -100,6 +73,42 @@ public class cartFragment extends Fragment {
         super.onStop();
         cartdisplayadapter.stopListening();
     }
+
+    //this function is for Grand total
+    public void bill() {
+
+        //total bill
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            int countTotal = 0;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+
+                    String total = ds.child("total").getValue().toString();
+                    int total1 = Integer.parseInt(total);
+                    countTotal = countTotal + total1;
+                }
+
+
+                GrandTotalTv.setText(String.valueOf(countTotal) + "₹");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        reference.addListenerForSingleValueEvent(valueEventListener);
+
+        //end total bill
+
+    }
+    //end this function is for Grand total
 
 
 }
