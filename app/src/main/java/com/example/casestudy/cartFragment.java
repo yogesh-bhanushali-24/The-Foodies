@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,8 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
     MaterialButton addressChoice;
     LocationManager locationManager;
     String l1;
+    String StoringAddress;
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +69,9 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Address");
+        progressDialog.setMessage("Storing Address");
 
         GrandTotalTv = view.findViewById(R.id.GrandTotal);
         addressChoice = view.findViewById(R.id.SelectAddressBtn);
@@ -110,6 +115,30 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                 TextView separator = dialog.findViewById(R.id.separatorTv);
                 MaterialButton LocationBtn = dialog.findViewById(R.id.MapLocation);
 
+
+                DatabaseReference FetchAddressReference = FirebaseDatabase.getInstance().getReference().child("Address").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                FetchAddressReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            addressEdit.setText(snapshot.child("address").getValue().toString());
+                            Toast.makeText(getContext(), "Already Stored Your Address", Toast.LENGTH_SHORT).show();
+                            separator.setVisibility(View.INVISIBLE);
+                            LocationBtn.setVisibility(View.GONE);
+                        } else {
+                            separator.setVisibility(View.VISIBLE);
+                            LocationBtn.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
                 //cross image for close or dismiss dialog box
                 crossDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -124,10 +153,22 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                 submitAddress.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressDialog.show();
                         if (!addressEdit.getText().toString().isEmpty()) {
+
+                            StoringAddress = addressEdit.getText().toString();
+                            DatabaseReference AddressReference = FirebaseDatabase.getInstance().getReference().child("Address").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            AddressReference.child("address").setValue(StoringAddress);
+                            progressDialog.dismiss();
+                            dialog.dismiss();
                             Toast.makeText(getContext(), "Address Successfully Added ", Toast.LENGTH_SHORT).show();
+
                         } else {
+                            progressDialog.dismiss();
                             Toast.makeText(getContext(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                            LocationBtn.setVisibility(View.VISIBLE);
+                            separator.setVisibility(View.VISIBLE);
+
                         }
                     }
                 });
