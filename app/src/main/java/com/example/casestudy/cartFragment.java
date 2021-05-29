@@ -58,7 +58,6 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
     String TempTotal;
     MaterialButton addressChoice;
     LocationManager locationManager;
-    EditText perfectAddress;
     String l1;
 
     @Override
@@ -68,9 +67,6 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
 
-        //never used
-        perfectAddress = view.findViewById(R.id.UserAddress);
-        //never used
 
         GrandTotalTv = view.findViewById(R.id.GrandTotal);
         addressChoice = view.findViewById(R.id.SelectAddressBtn);
@@ -150,7 +146,7 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                         checkLocationIsEnableOrNot();
                         //end Location Function Calling
                         addressEdit.setText(l1);
-                        Toast.makeText(getContext(), "Please Press Button One more time for getting current location", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "If Location Address Is Not Shown Click Button Once Again", Toast.LENGTH_SHORT).show();
 
                         if (!addressEdit.getText().toString().isEmpty()) {
                             LocationBtn.setVisibility(View.GONE);

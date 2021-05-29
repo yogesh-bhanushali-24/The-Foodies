@@ -22,8 +22,10 @@
        android:textSize="25dp"
        android:fontFamily="@font/poppins_medium"
        android:layout_marginRight="20dp"
-       android:layout_above="@+id/placeOrder"
-       android:layout_alignParentRight="true" />
+       android:layout_above="@+id/SelectAddressBtn"
+       android:layout_alignParentRight="true"
+
+       />
 
    <TextView
        android:id="@+id/lblGrandTotal"
@@ -32,43 +34,37 @@
        android:text="Grand Total"
        android:layout_alignParentLeft="true"
        android:layout_marginLeft="16dp"
-       android:layout_above="@+id/placeOrder"
+       android:layout_above="@+id/SelectAddressBtn"
        android:textSize="25dp"
        android:fontFamily="@font/poppins_medium" />
 
-   <EditText
-       android:id="@+id/UserAddress"
-       android:layout_width="280dp"
-       android:layout_height="wrap_content"
-       android:layout_above="@+id/lblGrandTotal"
-       android:layout_marginLeft="16dp"
-       android:hint="ADDRESS"
-       android:fontFamily="@font/poppins_medium" />
 
    <com.google.android.material.button.MaterialButton
        android:id="@+id/SelectAddressBtn"
-       android:layout_width="80dp"
-       android:layout_height="wrap_content"
-       android:layout_toRightOf="@+id/UserAddress"
-       android:text="add"
+       android:layout_width="370dp"
+       android:layout_height="45dp"
+       android:text="address"
        android:textColor="@color/black"
-       android:backgroundTint="@color/lightYellow"
-       android:layout_marginRight="16dp"
-       android:layout_above="@+id/GrandTotal"
        android:fontFamily="@font/poppins_medium"
-       android:layout_marginBottom="1dp" />
+       android:textSize="18dp"
+       app:backgroundTint="#24a0ed"
+       android:layout_centerHorizontal="true"
+       android:layout_above="@+id/placeOrder"
+       android:layout_marginBottom="-8dp" />
 
 
    <com.google.android.material.button.MaterialButton
        android:id="@+id/placeOrder"
-       android:layout_width="380dp"
+       android:layout_width="370dp"
        android:layout_height="50dp"
        android:layout_centerHorizontal="true"
        android:layout_alignParentBottom="true"
-       android:layout_marginTop="1dp"
        android:fontFamily="@font/poppins_medium"
        android:text="Place Order"
        android:textColor="@color/black"
-       android:textSize="20dp" />
+       android:textSize="20dp"
+
+
+       />
 
 </RelativeLayout>
