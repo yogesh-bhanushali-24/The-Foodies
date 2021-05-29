@@ -68,8 +68,13 @@ dependencies {
     //circle view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
     //
+
+    //random
+    implementation 'in.dd4you.appsconfig:appsconfig:1.4.6'
+    //random
+
+
 //firebase admin dependency
 
 

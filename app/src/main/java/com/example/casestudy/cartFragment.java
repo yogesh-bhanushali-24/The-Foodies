@@ -14,7 +14,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,10 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.provider.Settings;
-import android.support.v4.app.INotificationSideChannel;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,20 +44,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import in.dd4you.appsconfig.DD4YouConfig;
 
 
 public class cartFragment extends Fragment implements com.example.casestudy.cartdisplayadapter.totalCalling, LocationListener {
     private RecyclerView cartDisplayRecycler;
     cartdisplayadapter cartdisplayadapter;
     private TextView GrandTotalTv;
-    String TempTotal;
-    MaterialButton addressChoice;
+    private DD4YouConfig dd4YouConfig;
+    String StoredGrandTotal;
+    MaterialButton addressChoice, PlaceOrder;
     LocationManager locationManager;
     String l1;
     String StoringAddress;
+    String NameCounting, PriceCounting, QuantityCounting, TotalCounting;
+    String CustomerAddress;
     ProgressDialog progressDialog;
+    ProgressDialog OrderPlaceProgressDialog;
+    String RandomId;
+    String CustomerName, CustomerEmail, CustomerMobile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,8 +78,16 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         progressDialog.setTitle("Address");
         progressDialog.setMessage("Storing Address");
 
+        OrderPlaceProgressDialog = new ProgressDialog(getContext());
+        OrderPlaceProgressDialog.setTitle("Place Order");
+        OrderPlaceProgressDialog.setMessage("Order Ready..");
+
         GrandTotalTv = view.findViewById(R.id.GrandTotal);
         addressChoice = view.findViewById(R.id.SelectAddressBtn);
+        PlaceOrder = view.findViewById(R.id.placeOrder);
+
+        dd4YouConfig = new DD4YouConfig(getContext());
+
 
         //recycler view
         cartDisplayRecycler = view.findViewById(R.id.cartRecycler);
@@ -91,11 +104,9 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         cartDisplayRecycler.setAdapter(cartdisplayadapter);
         //end show cart view data
 
-
         //Grand Total Function calling
         bill();
         //end Grand Total Function calling
-
 
         //address choice By location or Manually
         addressChoice.setOnClickListener(new View.OnClickListener() {
@@ -106,15 +117,12 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                 dialog.setContentView(R.layout.address_choice_dialog);
                 dialog.setCancelable(false);
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().getAttributes().windowAnimations =
-                        android.R.style.Animation_Dialog;
-
+                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 ImageView crossDialog = dialog.findViewById(R.id.CloseAddress);
                 EditText addressEdit = dialog.findViewById(R.id.LocationAddress);
                 MaterialButton submitAddress = dialog.findViewById(R.id.SubmitAddressET);
                 TextView separator = dialog.findViewById(R.id.separatorTv);
                 MaterialButton LocationBtn = dialog.findViewById(R.id.MapLocation);
-
 
                 DatabaseReference FetchAddressReference = FirebaseDatabase.getInstance().getReference().child("Address").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 FetchAddressReference.addValueEventListener(new ValueEventListener() {
@@ -129,15 +137,12 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                             separator.setVisibility(View.VISIBLE);
                             LocationBtn.setVisibility(View.VISIBLE);
                         }
-
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
-
 
                 //cross image for close or dismiss dialog box
                 crossDialog.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +152,6 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                     }
                 });
                 //end cross image for close or dismiss dialog box
-
 
                 //Address Submit button
                 submitAddress.setOnClickListener(new View.OnClickListener() {
@@ -162,25 +166,20 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                             progressDialog.dismiss();
                             dialog.dismiss();
                             Toast.makeText(getContext(), "Address Successfully Added ", Toast.LENGTH_SHORT).show();
-
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(getContext(), "Please Enter Address", Toast.LENGTH_SHORT).show();
                             LocationBtn.setVisibility(View.VISIBLE);
                             separator.setVisibility(View.VISIBLE);
-
                         }
                     }
                 });
-
                 //end Address Submit button
-
 
                 //Current Location Button click
                 LocationBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         //Location Function Calling
                         getLocation();
                         grantPermission();
@@ -188,7 +187,6 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                         //end Location Function Calling
                         addressEdit.setText(l1);
                         Toast.makeText(getContext(), "If Location Address Is Not Shown Click Button Once Again", Toast.LENGTH_SHORT).show();
-
                         if (!addressEdit.getText().toString().isEmpty()) {
                             LocationBtn.setVisibility(View.GONE);
                             separator.setVisibility(View.GONE);
@@ -196,19 +194,54 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                         } else {
 
                         }
-
                     }
                 });
                 //end Current Location Button click
-
-
                 dialog.show();
-
                 //dialog box for address
             }
         });
         //end address choice
 
+        fetchAddress();
+        fetchUserDetail();
+        fetchRandomId();
+        fetchCartItems();
+
+        //Place Order
+        PlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (StoredGrandTotal.equals("0")) {
+                    Toast.makeText(getContext(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    OrderPlaceProgressDialog.show();
+                    DatabaseReference FinalPlaceOrder = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    HashMap<String, String> PlaceMap = new HashMap<>();
+                    PlaceMap.put("OrderID", RandomId);
+                    PlaceMap.put("Address", CustomerAddress);
+                    PlaceMap.put("CustomerName", CustomerName);
+                    PlaceMap.put("CustomerEmail", CustomerEmail);
+                    PlaceMap.put("CustomerMobile", CustomerMobile);
+                    PlaceMap.put("ItemNames", NameCounting);
+                    PlaceMap.put("ItemPrice", PriceCounting);
+                    PlaceMap.put("ItemQuantity", QuantityCounting);
+                    PlaceMap.put("ItemTotal", TotalCounting);
+                    PlaceMap.put("GrandTotal", StoredGrandTotal);
+                    PlaceMap.put("Status", "Pending");
+                    FinalPlaceOrder.push().setValue(PlaceMap);
+                    DatabaseReference ClearCart = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    ClearCart.removeValue();
+                    bill();
+                    OrderPlaceProgressDialog.dismiss();
+                    Toast.makeText(getContext(), "Order Successfully placed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        //end Place Order
 
         return view;
     }
@@ -243,22 +276,17 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                     int total1 = Integer.parseInt(total);
                     countTotal = countTotal + total1;
                 }
-                TempTotal = String.valueOf(countTotal);
+                StoredGrandTotal = String.valueOf(countTotal);
 
                 GrandTotalTv.setText(String.valueOf(countTotal) + "₹");
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         };
-
         reference.addListenerForSingleValueEvent(valueEventListener);
-
         //end total bill
-
     }
     //end this function is for Grand total
 
@@ -299,7 +327,6 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                     }).setNegativeButton("Cancel", null)
                     .show();
         }
-
     }
 
     private void grantPermission() {
@@ -313,36 +340,99 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
 
     @Override
     public void onLocationChanged(Location location) {
-
-
         try {
             Geocoder geocoder = new Geocoder(getActivity().getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             l1 = addresses.get(0).getAddressLine(0);
-            //  perfectAddress.setText(l1);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-
     }
     //end Location Functions
+
+
+    //fetching UserDetails
+    private void fetchUserDetail() {
+        DatabaseReference PlaceUserReference = FirebaseDatabase.getInstance().getReference().child("UserDetail").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        PlaceUserReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                CustomerName = snapshot.child("name").getValue().toString();
+                CustomerEmail = snapshot.child("email").getValue().toString();
+                CustomerMobile = snapshot.child("mobile").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    //exit fetching UserDetails
+
+    //fetching address
+    private void fetchAddress() {
+        DatabaseReference PlaceAddressReference = FirebaseDatabase.getInstance().getReference().child("Address").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        PlaceAddressReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    CustomerAddress = snapshot.child("address").getValue().toString();
+                } else {
+                    Toast.makeText(getContext(), "Click One more Time", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+    //exit fetching address
+
+    //random id
+    private void fetchRandomId() {
+        RandomId = dd4YouConfig.generateRandomString(15);
+    }
+    //exit random id
+
+    //fetching cartItems
+    private void fetchCartItems() {
+        DatabaseReference PlaceCartReference = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String CustomerItemName = ds.child("name").getValue().toString();
+                    String CustomerItemPrice = ds.child("price").getValue().toString();
+                    String CustomerItemQuantity = ds.child("quantity").getValue().toString();
+                    String CustomerItemTotal = ds.child("total").getValue().toString();
+                    NameCounting = NameCounting + "," + CustomerItemName.trim();
+                    PriceCounting = PriceCounting + "," + CustomerItemPrice.trim();
+                    QuantityCounting = QuantityCounting + "," + CustomerItemQuantity.trim();
+                    TotalCounting = TotalCounting + "," + CustomerItemTotal.trim();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+        PlaceCartReference.addValueEventListener(eventListener);
+    }
+    //exit fetching cartItems
 
 
 }
