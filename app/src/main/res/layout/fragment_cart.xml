@@ -7,21 +7,28 @@
     tools:context=".cartFragment"
     android:orientation="vertical">
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/cartRecycler"
-       android:layout_width="match_parent"
-       android:layout_height="500dp"
-       android:layout_gravity="top" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cartRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="top" />
+    <!--   <TextView-->
+    <!--       android:id="@+id/checkingValue"-->
+    <!--       android:layout_width="wrap_content"-->
+    <!--       android:layout_height="wrap_content"-->
+    <!--       android:text="Checking"-->
+    <!--       android:layout_below="@+id/cartRecycler"-->
+    <!--       />-->
 
 
-   <TextView
-       android:id="@+id/GrandTotal"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="0₹"
-       android:textSize="25dp"
-       android:fontFamily="@font/poppins_medium"
-       android:layout_marginRight="20dp"
+    <TextView
+        android:id="@+id/GrandTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0₹"
+        android:textSize="25dp"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_marginRight="20dp"
        android:layout_above="@+id/SelectAddressBtn"
        android:layout_alignParentRight="true"
 

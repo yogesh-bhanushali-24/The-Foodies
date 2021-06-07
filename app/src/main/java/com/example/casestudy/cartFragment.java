@@ -14,10 +14,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,6 +71,7 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
     ProgressDialog OrderPlaceProgressDialog;
     String RandomId;
     String CustomerName, CustomerEmail, CustomerMobile;
+    // TextView CheckingValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +92,7 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         PlaceOrder = view.findViewById(R.id.placeOrder);
 
         dd4YouConfig = new DD4YouConfig(getContext());
+        // CheckingValue=view.findViewById(R.id.checkingValue);
 
 
         //recycler view
@@ -208,6 +214,7 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
         fetchRandomId();
         fetchCartItems();
 
+
         //Place Order
         PlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,25 +223,43 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
 
                 if (StoredGrandTotal.equals("0")) {
                     Toast.makeText(getContext(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
+                } else if (CustomerAddress == null) {
+                    Toast.makeText(getContext(), "Insert Address", Toast.LENGTH_SHORT).show();
                 } else {
+
                     OrderPlaceProgressDialog.show();
-                    DatabaseReference FinalPlaceOrder = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    DatabaseReference FinalPlaceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
                     HashMap<String, String> PlaceMap = new HashMap<>();
                     PlaceMap.put("OrderID", RandomId);
                     PlaceMap.put("Address", CustomerAddress);
                     PlaceMap.put("CustomerName", CustomerName);
                     PlaceMap.put("CustomerEmail", CustomerEmail);
                     PlaceMap.put("CustomerMobile", CustomerMobile);
-                    PlaceMap.put("ItemNames", NameCounting);
-                    PlaceMap.put("ItemPrice", PriceCounting);
-                    PlaceMap.put("ItemQuantity", QuantityCounting);
-                    PlaceMap.put("ItemTotal", TotalCounting);
+                    PlaceMap.put("ItemNames", NameCounting.replace("null\n", ""));
+                    PlaceMap.put("ItemPrice", PriceCounting.replace("null\n", ""));
+                    PlaceMap.put("ItemQuantity", QuantityCounting.replace("null\n", ""));
+                    PlaceMap.put("ItemTotal", TotalCounting.replace("null\n", ""));
                     PlaceMap.put("GrandTotal", StoredGrandTotal);
                     PlaceMap.put("Status", "Pending");
                     FinalPlaceOrder.push().setValue(PlaceMap);
+
+                    //Notification code for order place
+                    Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "My Notification");
+                    builder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+                    builder.setSound(soundUri);
+                    builder.setContentTitle("The Foodies Team");
+                    builder.setContentText("Dear " + CustomerName + " Your Order Place Successfully Worth of " + StoredGrandTotal + "₹");
+                    builder.setSmallIcon(R.drawable.notificationcircle);
+                    builder.setAutoCancel(true);
+                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getContext());
+                    managerCompat.notify(1, builder.build());
+                    //end Notification code for order place
+
                     DatabaseReference ClearCart = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     ClearCart.removeValue();
                     bill();
+
                     OrderPlaceProgressDialog.dismiss();
                     Toast.makeText(getContext(), "Order Successfully placed", Toast.LENGTH_SHORT).show();
                 }
@@ -404,7 +429,7 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
 
     //random id
     private void fetchRandomId() {
-        RandomId = dd4YouConfig.generateRandomString(15);
+        RandomId = dd4YouConfig.generateRandomString(12).toUpperCase();
     }
     //exit random id
 
@@ -419,10 +444,10 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
                     String CustomerItemPrice = ds.child("price").getValue().toString();
                     String CustomerItemQuantity = ds.child("quantity").getValue().toString();
                     String CustomerItemTotal = ds.child("total").getValue().toString();
-                    NameCounting = NameCounting + "," + CustomerItemName.trim();
-                    PriceCounting = PriceCounting + "," + CustomerItemPrice.trim();
-                    QuantityCounting = QuantityCounting + "," + CustomerItemQuantity.trim();
-                    TotalCounting = TotalCounting + "," + CustomerItemTotal.trim();
+                    NameCounting = NameCounting + "\n" + CustomerItemName;
+                    PriceCounting = PriceCounting + "\n" + CustomerItemPrice;
+                    QuantityCounting = QuantityCounting + "\n" + CustomerItemQuantity;
+                    TotalCounting = TotalCounting + "\n" + CustomerItemTotal;
                 }
             }
 

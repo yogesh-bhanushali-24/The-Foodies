@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/orderCart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:elevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/CustomerOrderLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer OrderID:"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCustomerOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/CustomerOrderLabel"
+            android:text="A454NhBHHHHKK"
+            android:layout_marginLeft="9dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/CustomerNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Name:"
+            android:layout_below="@+id/CustomerOrderLabel"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yogesh Bhanushali"
+            android:layout_toRightOf="@+id/CustomerNameLabel"
+            android:layout_below="@+id/CustomerOrderLabel"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/CustomerEmailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Email:"
+            android:layout_below="@+id/CustomerNameLabel"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCustomerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Email:"
+            android:layout_below="@+id/CustomerNameLabel"
+            android:layout_toRightOf="@+id/CustomerEmailLabel"
+            android:layout_marginLeft="23dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/CustomerNumberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Mobile:"
+            android:layout_below="@+id/CustomerEmailLabel"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCustomerNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9726036668"
+            android:layout_below="@+id/CustomerEmailLabel"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/CustomerNumberLabel"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/CustomerAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Address:"
+            android:layout_below="@+id/CustomerNumberLabel"
+            android:layout_marginBottom="40dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCustomerAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B-302 Dipam Residency"
+            android:layout_below="@+id/CustomerNumberLabel"
+            android:layout_toRightOf="@+id/CustomerAddressLabel"
+            android:layout_marginLeft="9dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ItemNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Names"
+            android:layout_below="@+id/CustomerAddressLabel"
+            android:layout_marginRight="50dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvItemName"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Masala Chana"
+            android:layout_below="@+id/ItemNameLabel"
+            android:layout_marginRight="30dp"
+
+            android:textAlignment="textStart"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ItemQuantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:layout_below="@+id/CustomerAddressLabel"
+            android:layout_toRightOf="@+id/ItemNameLabel"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvItemQuantity"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:layout_below="@+id/ItemQuantityLabel"
+            android:layout_toRightOf="@+id/ItemNameLabel"
+            android:layout_marginRight="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ItemPriceLabel"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:layout_toRightOf="@+id/ItemQuantityLabel"
+            android:layout_below="@id/CustomerAddressLabel"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvItemPrice"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="10000"
+            android:layout_toRightOf="@+id/ItemQuantityLabel"
+            android:layout_below="@id/ItemPriceLabel"
+            android:layout_marginRight="20dp"
+
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ItemPriceTotalLabel"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:layout_toRightOf="@+id/ItemPriceLabel"
+            android:layout_below="@id/CustomerAddressLabel"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvItemPriceTotal"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="152500"
+            android:layout_toRightOf="@+id/ItemPriceLabel"
+            android:layout_below="@id/ItemPriceTotalLabel"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+
+            />
+
+        <TextView
+            android:id="@+id/ItemGrandTotalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GrandTotal"
+            android:layout_below="@id/tvItemName"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvItemGrandTotal"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="GTotal"
+            android:layout_below="@id/tvItemPriceTotal"
+            android:layout_toRightOf="@+id/tvItemPrice"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/StatusLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Status"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:layout_below="@+id/ItemGrandTotalLabel"-->
+        <!--            />-->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Pending"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/PdfBtn"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/poppins_medium"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_below="@+id/ItemGrandTotalLabel"
+            android:textSize="15dp"
+            android:layout_marginLeft="40dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/OrderCancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_700"
+            android:textColor="@color/black"
+            android:text="cancel"
+            android:layout_below="@+id/ItemGrandTotalLabel"
+            android:layout_marginRight="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/PdfBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkYellow"
+            android:textColor="@color/black"
+            android:text="PDF"
+            android:layout_below="@+id/ItemGrandTotalLabel"
+            android:layout_toRightOf="@+id/OrderCancelBtn" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
