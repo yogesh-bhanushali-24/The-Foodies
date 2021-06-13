@@ -436,7 +436,8 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
     //fetching cartItems
     private void fetchCartItems() {
         DatabaseReference PlaceCartReference = FirebaseDatabase.getInstance().getReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        ValueEventListener eventListener = new ValueEventListener() {
+
+        PlaceCartReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -454,8 +455,8 @@ public class cartFragment extends Fragment implements com.example.casestudy.cart
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-        };
-        PlaceCartReference.addValueEventListener(eventListener);
+        });
+
     }
     //exit fetching cartItems
 
