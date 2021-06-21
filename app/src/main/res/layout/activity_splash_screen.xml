@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="145dp"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="THE FOODIES"
+        android:text="FOODIE HEAVEN"
         android:textSize="30sp" />
 
     <TextView
@@ -43,8 +43,17 @@
         android:fontFamily="sans-serif-light"
         android:text="© Copyright All Rights Reserved"
         android:textSize="15sp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available  only in Valsad District"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="125dp"
+        android:fontFamily="@font/poppins_medium" />
 
 
 </RelativeLayout>

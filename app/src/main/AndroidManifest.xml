@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.casestudy">
+    package="com.heaven.foodie">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,21 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaseStudy">
         <activity
-            android:name=".CategoriesViewActivity"
+            android:name="com.heaven.foodie.CategoriesViewActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".FirstUserDetail"
+            android:name="com.heaven.foodie.FirstUserDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OtpVerificationActivity"
+            android:name="com.heaven.foodie.OtpVerificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Sign_up_with_phone_number"
+            android:name="com.heaven.foodie.Sign_up_with_phone_number"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".SplashScreen"
+            android:name="com.heaven.foodie.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.heaven.foodie.MainActivity"
             android:screenOrientation="portrait"></activity>
 
         <meta-data
