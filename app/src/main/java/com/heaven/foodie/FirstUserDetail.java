@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 public class FirstUserDetail extends AppCompatActivity {
@@ -54,29 +56,34 @@ public class FirstUserDetail extends AppCompatActivity {
 
         //this code for session and this code is used when user is already create account on this app
 
-
-        referenceCheckUser.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String alreadyExistNumber = etNumber.getText().toString();
-                String Email = snapshot.child("email").getValue().toString();
-                String Name = snapshot.child("name").getValue().toString();
-
-                if (alreadyExistNumber.equals(etNumber.getText().toString())) {
-                    progressDialog.show();
-                    etName.setText(Name);
-                    etEmail.setText(Email);
-                }
-                Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
-                startActivity(intent);
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        referenceCheckUser.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String alreadyExistNumber = snapshot.child("mobile").getValue().toString();
+//                String Email = snapshot.child("email").getValue().toString();
+//                String Name = snapshot.child("name").getValue().toString();
+//
+//                if (alreadyExistNumber==etNumber.getText().toString()) {
+//                    progressDialog.show();
+//                    etName.setText(Name);
+//                    etEmail.setText(Email);
+////                    Intent intent = new Intent(FirstUserDetail.this, MainActivity.class);
+////                    startActivity(intent);
+//                    progressDialog.dismiss();
+//                }
+//                else
+//                {
+//                    Toast.makeText(FirstUserDetail.this, "Enter Important Details", Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
         //end session

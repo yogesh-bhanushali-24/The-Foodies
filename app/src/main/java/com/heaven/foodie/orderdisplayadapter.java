@@ -9,9 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.heaven.foodie.model.OrderModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class orderdisplayadapter extends FirebaseRecyclerAdapter<OrderModel, orderdisplayadapter.OrderViewHolder> {
     public orderdisplayadapter(@NonNull FirebaseRecyclerOptions<OrderModel> options) {
@@ -51,6 +57,21 @@ public class orderdisplayadapter extends FirebaseRecyclerAdapter<OrderModel, ord
             holder.Status.setTextColor(Color.parseColor("#8B0000"));
             // holder.cardView.setCardBackgroundColor(Color.parseColor("#FD8302"));
         }
+        holder.CButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (model.getStatus().equals("Pending")) {
+                    String CurrentNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", "");
+                    String StatusChange = model.getStatus();
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("Cancel", StatusChange);
+                    FirebaseDatabase.getInstance().getReference().child("Order").child(getRef(position).getKey()).updateChildren(map);
+                    //  child(getRef(position).getKey()).updateChildren(map);
+                    // holder.Status.setText("Cancel");
+                    // holder.Status.setTextColor(Color.parseColor("#8B0000"));
+                }
+            }
+        });
 
 
     }
@@ -64,7 +85,7 @@ public class orderdisplayadapter extends FirebaseRecyclerAdapter<OrderModel, ord
 
     class OrderViewHolder extends RecyclerView.ViewHolder {
         TextView CustomerOrder, CustomerName, CustomerEmail, CustomerNumber, CustomerAddress, ItemName, ItemQuantity, ItemPrice, ItemPriceTotal, ItemGrandTotal, Status;
-
+        MaterialButton CButton;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +100,7 @@ public class orderdisplayadapter extends FirebaseRecyclerAdapter<OrderModel, ord
             ItemPriceTotal = itemView.findViewById(R.id.tvItemPriceTotal);
             ItemGrandTotal = itemView.findViewById(R.id.tvItemGrandTotal);
             Status = itemView.findViewById(R.id.tvStatus);
+            CButton = itemView.findViewById(R.id.OrderCancelBtn);
         }
     }
 }
